@@ -19,6 +19,9 @@ import { ReduxInputClass } from './redux/redux_input_class'
 import { StoreDump } from './store_dump'
 import { ReduxInputHook } from './redux/redux_input_hook'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import { ClockMemo } from './performance/clock_memo'
+import { ClockUseMemo } from './performance/clock_use_memo'
+import { Expensive } from './performance/expensive'
 
 const SECTIONS = [
   {
@@ -91,6 +94,26 @@ const SECTIONS = [
       }
     ],
     footerComponent: StoreDump
+  },
+  {
+    title: 'Performance',
+    samples: [
+      {
+        title: 'Expensive computation',
+        component: Expensive,
+        source: codegen.require('../macros/import_source', './performance/expensive.js')
+      },
+      {
+        title: 'memo() is the new PureComponent',
+        component: ClockMemo,
+        source: codegen.require('../macros/import_source', './performance/clock_memo.js')
+      },
+      {
+        title: 'Bail out of rendering with useMemo()',
+        component: ClockUseMemo,
+        source: codegen.require('../macros/import_source', './performance/clock_use_memo.js')
+      }
+    ]
   }
 ]
 
@@ -132,6 +155,10 @@ const styled = withStyles(theme => ({
     '&.enter-active': {
       transition: 'opacity 300ms ease',
       opacity: 1
+    },
+    '&.exit-active': {
+      transition: 'opacity 300ms ease',
+      opacity: 0
     }
   },
 

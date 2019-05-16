@@ -22,6 +22,15 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { ClockMemo } from './performance/clock_memo'
 import { ClockUseMemo } from './performance/clock_use_memo'
 import { Expensive } from './performance/expensive'
+import { WikiSearch } from './async/wiki_search'
+import { MountedHook } from './effect/mounted_hook'
+import { MountedClass } from './effect/mounted_class'
+import { UpdatedHook } from './effect/updated_hook'
+import { UpdatedClass } from './effect/updated_class'
+import { SubscriptionHook } from './effect/subscription_hook'
+import { SubscriptionHookExtracted } from './effect/subscription_hook_extracted'
+import { SubscriptionClass } from './effect/subscription_class'
+import { StopwatchCallback } from './performance/stopwatch_callback'
 
 const SECTIONS = [
   {
@@ -36,6 +45,46 @@ const SECTIONS = [
         title: 'Hook powered',
         component: ControlledInputHook,
         source: codegen.require('../macros/import_source', './state/controlled_input_hook.js')
+      }
+    ]
+  },
+  {
+    title: 'Effect',
+    samples: [
+      {
+        title: 'Component did mount - hook',
+        component: MountedHook,
+        source: codegen.require('../macros/import_source', './effect/mounted_hook.js')
+      },
+      {
+        title: 'Component did mount - class',
+        component: MountedClass,
+        source: codegen.require('../macros/import_source', './effect/mounted_class.js')
+      },
+      {
+        title: 'Updated - hook',
+        component: UpdatedHook,
+        source: codegen.require('../macros/import_source', './effect/updated_hook.js')
+      },
+      {
+        title: 'Updated - class',
+        component: UpdatedClass,
+        source: codegen.require('../macros/import_source', './effect/updated_class.js')
+      },
+      {
+        title: 'Subscription - hook',
+        component: SubscriptionHook,
+        source: codegen.require('../macros/import_source', './effect/subscription_hook.js')
+      },
+      {
+        title: 'Subscription - class',
+        component: SubscriptionClass,
+        source: codegen.require('../macros/import_source', './effect/subscription_class.js')
+      },
+      {
+        title: 'Subscription - hook extracted',
+        component: SubscriptionHookExtracted,
+        source: codegen.require('../macros/import_source', './effect/subscription_hook_extracted.js')
       }
     ]
   },
@@ -112,6 +161,21 @@ const SECTIONS = [
         title: 'Bail out of rendering with useMemo()',
         component: ClockUseMemo,
         source: codegen.require('../macros/import_source', './performance/clock_use_memo.js')
+      },
+      {
+        title: 'Callbacks',
+        component: StopwatchCallback,
+        source: codegen.require('../macros/import_source', './performance/stopwatch_callback.js')
+      }
+    ]
+  },
+  {
+    title: 'Async',
+    samples: [
+      {
+        title: 'Wiki search',
+        component: WikiSearch,
+        source: codegen.require('../macros/import_source', './async/wiki_search.js')
       }
     ]
   }

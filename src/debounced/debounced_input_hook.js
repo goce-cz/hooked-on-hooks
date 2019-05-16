@@ -8,41 +8,45 @@ import { ResetRouteParam } from '../reset_route_param'
 
 export const DebouncedInputHook = () => {
   const [value, setValue] = useRouteParam('value', '')
-  let [interimValue, setInterimValue] = useState(value)
-  const debouncedSetValue = useRef(null)
+  const [interimValue, setInterimValue] = useState(value)
+  const debouncedSetValueRef = useRef(null)
 
   useEffect(
     () => {
       // this updates the interim value whenever the persisted one or any dependency changes
       setInterimValue(value)
-      interimValue = value
-      if(debouncedSetValue.current) {
-        debouncedSetValue.current.cancel()
+      if(debouncedSetValueRef.current) {
+        debouncedSetValueRef.current.cancel()
       }
     }, [value, setInterimValue]
   )
 
   useEffect(
     () => {
-      debouncedSetValue.current = debounce(
+      debouncedSetValueRef.current = debounce(
         newValue => setValue(newValue),
         DEBOUNCE_DELAY
       )
       return () => {
         // any pending call to the debounced function will be canceled
         // when any of the dependencies change
-        debouncedSetValue.current.cancel()
+        debouncedSetValueRef.current.cancel()
       }
     },
-    [setValue, debouncedSetValue]
+    [setValue, debouncedSetValueRef]
   )
 
   const handleInput = event => {
     const newValue = event.target.value
     setInterimValue(newValue)
-    debouncedSetValue.current(newValue)
+    debouncedSetValueRef.current(newValue)
   }
-  const handleClear = () => setValue('')
+
+  const handleClear = () => {
+    setInterimValue('')
+    debouncedSetValueRef.current('')
+    debouncedSetValueRef.current.flush()
+  }
 
   return (
     <>

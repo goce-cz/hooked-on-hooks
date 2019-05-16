@@ -7,52 +7,57 @@ import { DEBOUNCE_DELAY } from '../constants'
 import { ResetRouteParam } from '../reset_route_param'
 
 const useDebounce = (value, setValue, delay) => {
-  let [interim, setInterim] = useState(value)
-  const debouncedSetValue = useRef(null)
+  const [interim, setInterim] = useState(value)
+  const debouncedSetValueRef = useRef(null)
 
   useEffect(
     () => {
       // this updates the interim value whenever the persisted one or any dependency changes
       setInterim(value)
-      interim = value
-      if(debouncedSetValue.current) {
-        debouncedSetValue.current.cancel()
+      if(debouncedSetValueRef.current) {
+        debouncedSetValueRef.current.cancel()
       }
     }, [value, setInterim]
   )
 
   useEffect(
     () => {
-      debouncedSetValue.current = debounce(
+      debouncedSetValueRef.current = debounce(
         newValue => setValue(newValue),
         delay
       )
       return () => {
         // any pending call to the debounced function will be canceled
         // when any of the dependencies change
-        debouncedSetValue.current.cancel()
+        debouncedSetValueRef.current.cancel()
       }
     },
-    [setValue, debouncedSetValue, delay]
+    [setValue, debouncedSetValueRef, delay]
   )
 
   const setDebounced = newValue => {
     setInterim(newValue)
-    debouncedSetValue.current(newValue)
+    debouncedSetValueRef.current(newValue)
   }
 
-  return [interim, setDebounced]
+  const setImmediate = newValue => {
+    setDebounced(newValue)
+    debouncedSetValueRef.current.flush()
+  }
+
+  return [interim, setDebounced, setImmediate]
 }
 
 export const DebouncedInputHookExtracted = () => {
   const [value, setValue] = useRouteParam('value', '')
   const [
     interimValue,
-    setDebouncedValue
+    setDebouncedValue,
+    setImmediateValue
   ] = useDebounce(value, setValue, DEBOUNCE_DELAY)
 
   const handleInput = event => setDebouncedValue(event.target.value)
-  const handleClear = () => setValue('')
+  const handleClear = () => setImmediateValue('')
 
   return (
     <>

@@ -1,47 +1,42 @@
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useMemo, useState } from 'react'
+import LinearProgress from '@material-ui/core/es/LinearProgress/LinearProgress'
+import Button from '@material-ui/core/es/Button/Button'
 
 const generateRandomNumbers = () => [...Array(200000).keys()].map(() => Math.random())
 
-export const Expensive = () => {
-  const [randomNumbers, setRandomNumbers] = useState(generateRandomNumbers)
-  const [mouseCoordinates, setMouseCoordinates] = useState({ x: 0, y: 0 })
-  const boxRef = useRef()
+export const MedianVisualizer = ({ numbers }) => {
+  const [valueUnderCursor, setValueUnderCursor] = useState(0)
   const median = useMemo(
     () => {
-      randomNumbers.sort()
-      console.log(randomNumbers.slice(0, 5))
-      return randomNumbers[Math.ceil(randomNumbers.length / 2)]
+      numbers.sort()
+      return numbers[Math.ceil(numbers.length / 2)]
     },
-    [randomNumbers]
+    [numbers]
   )
 
-  const handleMouseMove = event => {
-    const boundingClientRect = boxRef.current.getBoundingClientRect()
-    setMouseCoordinates({ x: event.clientX - boundingClientRect.left, y: event.clientY - boundingClientRect.top })
-  }
-
-  const handleClick = () => setRandomNumbers(generateRandomNumbers)
+  const handleMouseMove = event => setValueUnderCursor(Math.round(10 * event.clientX / event.target.clientWidth) / 10)
 
   return (
-    <div
-      ref={boxRef}
-      onClick={handleClick}
-      onMouseMove={handleMouseMove}
-      style={{ height: 200, position: 'relative' }}
-    >
+    <div>
       Median is: {median}
-      <div
-        style={{
-          background: 'red',
-          position: 'absolute',
-          width: 5,
-          height: 5,
-          left: 0,
-          right: 0,
-          // transition: 'transform 200ms linear',
-          transform: `translate3d(${mouseCoordinates.x}px,${mouseCoordinates.y}px,0)`
-        }}
+      <LinearProgress
+        value={median * 100}
+        variant='determinate' onMouseMove={handleMouseMove}
+        style={{ height: 20 }}
       />
+      <div>Value under cursor: {valueUnderCursor}</div>
     </div>
+  )
+}
+
+export const Expensive = () => {
+  const [randomNumbers, setRandomNumbers] = useState(generateRandomNumbers)
+  const handleClick = () => setRandomNumbers(generateRandomNumbers())
+
+  return (
+    <>
+      <MedianVisualizer numbers={randomNumbers} onClick={handleClick}/>
+      <Button onClick={handleClick}>Randomize</Button>
+    </>
   )
 }

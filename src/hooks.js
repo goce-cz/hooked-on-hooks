@@ -56,6 +56,8 @@ export const useRouteParam = (paramName, defaultValue = null, parser = inferPara
 
   const parserRef = useRef(parser)
   parserRef.current = parser
+  const defaultValueRef = useRef(parser)
+  defaultValueRef.current = defaultValue
 
   const [snapshot, setSnapshot] = useState(() => {
     const route = router.getState()
@@ -66,13 +68,13 @@ export const useRouteParam = (paramName, defaultValue = null, parser = inferPara
     () => {
       const subscription = router.subscribe({
         next: ({route}) => {
-          const parsedValue = parseParamValue(route && route.params[paramName], defaultValue, parserRef.current)
+          const parsedValue = parseParamValue(route && route.params[paramName], defaultValueRef.current, parserRef.current)
           setSnapshot(parsedValue)
         }
       })
       return () => subscription.unsubscribe()
     },
-    [router, paramName, setSnapshot, parserRef]
+    [router, paramName, setSnapshot, parserRef, defaultValueRef]
   )
 
   const setValue = useCallback(
@@ -98,47 +100,54 @@ export const useRouteParam = (paramName, defaultValue = null, parser = inferPara
  * @param setValue callback to change the persisted value
  * @param delay debounce delay
  * @param deps optional additional dependencies that allow you to cancel debounce when important input properties change
- * @returns {any[]} interim value and debounced function for changing the value
+ * @returns {any[]} interim value, debounced function for changing the value and a function that flushes the value immediately
  */
 export const useDebounce = (value, setValue, delay, deps = []) => {
-  let [interim, setInterim] = useState(value)
-  const debouncedSetValue = useRef(null)
+  const [interim, setInterim] = useState(value)
+  const debouncedSetValueRef = useRef(null)
 
   useEffect(
     () => {
       // this updates the interim value whenever the persisted one or any dependency changes
       setInterim(value)
-      interim = value
-      if(debouncedSetValue.current) {
-        debouncedSetValue.current.cancel()
+      if (debouncedSetValueRef.current) {
+        debouncedSetValueRef.current.cancel()
       }
     }, [value, setInterim, ...deps]
   )
 
   useEffect(
     () => {
-      debouncedSetValue.current = debounce(
+      debouncedSetValueRef.current = debounce(
         newValue => setValue(newValue),
         delay
       )
       return () => {
         // any pending call to the debounced function will be canceled
         // when any of the dependencies change
-        debouncedSetValue.current.cancel()
+        debouncedSetValueRef.current.cancel()
       }
     },
-    [setValue, debouncedSetValue, delay, ...deps]
+    [setValue, debouncedSetValueRef, delay, ...deps]
   )
 
   const setDebounced = useCallback(
     newValue => {
       setInterim(newValue)
-      debouncedSetValue.current(newValue)
+      debouncedSetValueRef.current(newValue)
     },
-    [setInterim, debouncedSetValue]
+    [setInterim, debouncedSetValueRef]
   )
 
-  return [interim, setDebounced]
+  const setImmediate = useCallback(
+    newValue => {
+      setDebounced(newValue)
+      debouncedSetValueRef.current.flush()
+    },
+    [setDebounced, debouncedSetValueRef]
+  )
+
+  return [interim, setDebounced, setImmediate]
 }
 
 /**

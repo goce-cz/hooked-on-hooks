@@ -16,11 +16,12 @@ export const ReduxInputHook = () => {
   )
   const [
     interimValue,
-    setDebouncedValue
+    setDebouncedValue,
+    setImmediateValue
   ] = useDebounce(value, setValue, DEBOUNCE_DELAY)
 
   const handleInput = event => setDebouncedValue(event.target.value)
-  const handleClear = () => setValue('')
+  const handleClear = () => setImmediateValue('')
 
   return (
     <TextField

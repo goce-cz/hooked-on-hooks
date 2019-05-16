@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import React from 'react'
-import Select from '@material-ui/core/es/Select/Select'
-import MenuItem from '@material-ui/core/es/MenuItem/MenuItem'
+import { Select, MenuItem } from '@material-ui/core'
 
 const QUESTIONS = [
   'Do you like hooks?',
   'Do you like my brownbag?'
 ]
-export const Questionaire = ({ children }) => {
+export const Questionnaire = ({ children }) => {
   const [question, setQuestion] = useState(QUESTIONS[0])
   const child = React.Children.only(children)
   return (

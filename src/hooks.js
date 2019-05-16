@@ -113,6 +113,7 @@ export const useDebounce = (value, setValue, delay, deps = []) => {
       if (debouncedSetValueRef.current) {
         debouncedSetValueRef.current.cancel()
       }
+      // eslint-disable-next-line
     }, [value, setInterim, ...deps]
   )
 
@@ -128,6 +129,7 @@ export const useDebounce = (value, setValue, delay, deps = []) => {
         debouncedSetValueRef.current.cancel()
       }
     },
+    // eslint-disable-next-line
     [setValue, debouncedSetValueRef, delay, ...deps]
   )
 
@@ -262,6 +264,7 @@ export const useAsync = promise => {
 export const useTask = (task, deps) => {
   const promise = useMemo(
     () => task(),
+    // eslint-disable-next-line
     deps
   )
   return useAsync(promise)

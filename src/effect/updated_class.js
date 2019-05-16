@@ -1,6 +1,7 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { Component } from 'react'
 import Checkbox from '@material-ui/core/es/Checkbox/Checkbox'
-import { Questionaire } from '../questionaire'
+
+import { Questionnaire } from '../questionnaire'
 
 class QuestionAndAnswer extends Component {
   state = {
@@ -31,4 +32,4 @@ class QuestionAndAnswer extends Component {
   }
 }
 
-export const UpdatedClass = () => <Questionaire><QuestionAndAnswer/></Questionaire>
+export const UpdatedClass = () => <Questionnaire><QuestionAndAnswer/></Questionnaire>

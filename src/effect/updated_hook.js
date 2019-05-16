@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Checkbox from '@material-ui/core/es/Checkbox/Checkbox'
-import { Questionaire } from '../questionaire'
+import { Questionnaire } from '../questionnaire'
 
 const QuestionAndAnswer = ({ question }) => {
   const [checked, setChecked] = useState(null)
@@ -23,4 +23,4 @@ const QuestionAndAnswer = ({ question }) => {
   )
 }
 
-export const UpdatedHook = () => <Questionaire><QuestionAndAnswer/></Questionaire>
+export const UpdatedHook = () => <Questionnaire><QuestionAndAnswer/></Questionnaire>

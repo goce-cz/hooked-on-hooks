@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { TextField } from '@material-ui/core'
-import Button from '@material-ui/core/es/Button/Button'
+import { TextField, Button } from '@material-ui/core'
 
 export const ControlledInputHook = () => {
   const [value, setValue] = useState('')

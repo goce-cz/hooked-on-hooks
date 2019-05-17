@@ -15,7 +15,7 @@ export const Questionnaire = ({ children }) => {
         {React.cloneElement(child, { question })}
       </div>
       <Select value={question} onChange={event => setQuestion(event.target.value)}>
-        {QUESTIONS.map(question => <MenuItem value={question}>{question}</MenuItem>)}
+        {QUESTIONS.map(question => <MenuItem key={question} value={question}>{question}</MenuItem>)}
       </Select>
     </>
   )

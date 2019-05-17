@@ -6,7 +6,7 @@ import { DEBOUNCE_DELAY } from '../constants'
 import { connect } from 'react-redux'
 import { changeValue, getValue } from '../store'
 
-export class ReduxInputClass extends Component {
+export class ClassReduxInput extends Component {
   state = {
     interimValue: '',
     lastStoreValue: ''
@@ -80,4 +80,4 @@ const mapDispatchToProps = {
   onChangeValue: changeValue
 }
 
-ReduxInputClass = connect(mapStateToProps, mapDispatchToProps)(ReduxInputClass)
+ClassReduxInput = connect(mapStateToProps, mapDispatchToProps)(ClassReduxInput)

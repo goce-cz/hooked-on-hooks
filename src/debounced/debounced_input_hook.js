@@ -6,7 +6,7 @@ import { useRouteParam } from '../hooks'
 import { DEBOUNCE_DELAY } from '../constants'
 import { ResetRouteParam } from '../reset_route_param'
 
-export const DebouncedInputHook = () => {
+export const HookDebouncedInput = () => {
   const [value, setValue] = useRouteParam('value', '')
   const [interimValue, setInterimValue] = useState(value)
   const debouncedSetValueRef = useRef(null)

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export class SubscriptionClass extends Component {
+export class ClassSubscription extends Component {
   state = {
     windowWidth: window.innerWidth
   }

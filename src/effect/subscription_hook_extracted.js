@@ -12,7 +12,7 @@ const useWindowWidth = () => {
   return windowWidth
 }
 
-export const SubscriptionHookExtracted = () => {
+export const ExtractedHookSubscription = () => {
   const windowWidth = useWindowWidth()
 
   return (

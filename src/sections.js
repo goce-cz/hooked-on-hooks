@@ -1,35 +1,34 @@
 import React from 'react'
-import { Tabs, Tab, AppBar, withStyles } from '@material-ui/core'
+import { Paper, Tabs, Tab, AppBar, withStyles } from '@material-ui/core'
 import SwipeableViews from 'react-swipeable-views'
 import codegen from 'babel-plugin-codegen/macro'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 
 import { useRouteParam } from './hooks'
-import Paper from '@material-ui/core/Paper'
 import { ControlledInputHook } from './state/controlled_input_hook'
 import { Section } from './section'
-import { RouteInputClass } from './route/route_input_class'
-import { RouteInputHook } from './route/route_input_hook'
+import { ClassRouteInput } from './route/route_input_class'
+import { HookRouteInput } from './route/route_input_hook'
 import { ControlledInputClass } from './state/controlled_input_class'
-import { RouteInputHookExtracted } from './route/route_input_hook_extracted'
-import { DebouncedInputClass } from './debounced/debounced_input_class'
-import { DebouncedInputHook } from './debounced/debounced_input_hook'
-import { DebouncedInputHookExtracted } from './debounced/debounced_input_hook_extracted'
-import { ReduxInputClass } from './redux/redux_input_class'
+import { ExtractedHookRouteInput } from './route/route_input_hook_extracted'
+import { ClassDebouncedInput } from './debounced/debounced_input_class'
+import { HookDebouncedInput } from './debounced/debounced_input_hook'
+import { ExtractedHookDebouncedInput } from './debounced/debounced_input_hook_extracted'
+import { ClassReduxInput } from './redux/redux_input_class'
 import { StoreDump } from './store_dump'
-import { ReduxInputHook } from './redux/redux_input_hook'
+import { HookReduxInput } from './redux/redux_input_hook'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { ClockMemo } from './performance/clock_memo'
 import { ClockUseMemo } from './performance/clock_use_memo'
 import { Expensive } from './performance/expensive'
 import { WikiSearch } from './async/wiki_search'
-import { MountedHook } from './effect/mounted_hook'
-import { MountedClass } from './effect/mounted_class'
-import { UpdatedHook } from './effect/updated_hook'
-import { UpdatedClass } from './effect/updated_class'
-import { SubscriptionHook } from './effect/subscription_hook'
-import { SubscriptionHookExtracted } from './effect/subscription_hook_extracted'
-import { SubscriptionClass } from './effect/subscription_class'
+import { HookMounted } from './effect/mounted_hook'
+import { ClassMounted } from './effect/mounted_class'
+import { HookUpdated } from './effect/updated_hook'
+import { ClassUpdated } from './effect/updated_class'
+import { HookSubscription } from './effect/subscription_hook'
+import { ExtractedHookSubscription } from './effect/subscription_hook_extracted'
+import { ClassSubscription } from './effect/subscription_class'
 import { StopwatchCallback } from './performance/stopwatch_callback'
 
 const SECTIONS = [
@@ -53,37 +52,37 @@ const SECTIONS = [
     samples: [
       {
         title: 'Component did mount - hook',
-        component: MountedHook,
+        component: HookMounted,
         source: codegen.require('../macros/import_source', './effect/mounted_hook.js')
       },
       {
         title: 'Component did mount - class',
-        component: MountedClass,
+        component: ClassMounted,
         source: codegen.require('../macros/import_source', './effect/mounted_class.js')
       },
       {
         title: 'Updated - hook',
-        component: UpdatedHook,
+        component: HookUpdated,
         source: codegen.require('../macros/import_source', './effect/updated_hook.js')
       },
       {
         title: 'Updated - class',
-        component: UpdatedClass,
+        component: ClassUpdated,
         source: codegen.require('../macros/import_source', './effect/updated_class.js')
       },
       {
         title: 'Subscription - hook',
-        component: SubscriptionHook,
+        component: HookSubscription,
         source: codegen.require('../macros/import_source', './effect/subscription_hook.js')
       },
       {
         title: 'Subscription - class',
-        component: SubscriptionClass,
+        component: ClassSubscription,
         source: codegen.require('../macros/import_source', './effect/subscription_class.js')
       },
       {
         title: 'Subscription - hook extracted',
-        component: SubscriptionHookExtracted,
+        component: ExtractedHookSubscription,
         source: codegen.require('../macros/import_source', './effect/subscription_hook_extracted.js')
       }
     ]
@@ -93,17 +92,17 @@ const SECTIONS = [
     samples: [
       {
         title: 'Class powered',
-        component: RouteInputClass,
+        component: ClassRouteInput,
         source: codegen.require('../macros/import_source', './route/route_input_class.js')
       },
       {
         title: 'Hook powered',
-        component: RouteInputHook,
+        component: HookRouteInput,
         source: codegen.require('../macros/import_source', './route/route_input_hook.js')
       },
       {
         title: 'Powered by extracted hook',
-        component: RouteInputHookExtracted,
+        component: ExtractedHookRouteInput,
         source: codegen.require('../macros/import_source', './route/route_input_hook_extracted.js')
       }
     ]
@@ -113,17 +112,17 @@ const SECTIONS = [
     samples: [
       {
         title: 'Class powered',
-        component: DebouncedInputClass,
+        component: ClassDebouncedInput,
         source: codegen.require('../macros/import_source', './debounced/debounced_input_class.js')
       },
       {
         title: 'Hook powered',
-        component: DebouncedInputHook,
+        component: HookDebouncedInput,
         source: codegen.require('../macros/import_source', './debounced/debounced_input_hook.js')
       },
       {
         title: 'Powered by extracted hook',
-        component: DebouncedInputHookExtracted,
+        component: ExtractedHookDebouncedInput,
         source: codegen.require('../macros/import_source', './debounced/debounced_input_hook_extracted.js')
       }
     ]
@@ -133,12 +132,12 @@ const SECTIONS = [
     samples: [
       {
         title: 'Class powered',
-        component: ReduxInputClass,
+        component: ClassReduxInput,
         source: codegen.require('../macros/import_source', './redux/redux_input_class.js')
       },
       {
         title: 'Hook powered',
-        component: ReduxInputHook,
+        component: HookReduxInput,
         source: codegen.require('../macros/import_source', './redux/redux_input_hook.js')
       }
     ],

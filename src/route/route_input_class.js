@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { TextField } from '@material-ui/core'
 import { withRoute } from 'react-router5'
 
-export class RouteInputClass extends Component {
+export class ClassRouteInput extends Component {
   handleInput = async event => {
     const {
       route,
@@ -32,4 +32,4 @@ export class RouteInputClass extends Component {
   }
 }
 
-RouteInputClass = withRoute(RouteInputClass)
+ClassRouteInput = withRoute(ClassRouteInput)

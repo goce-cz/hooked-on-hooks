@@ -24,4 +24,4 @@ class Animated extends Component {
   }
 }
 
-export const MountedClass = () => <Mounter><Animated/></Mounter>
+export const ClassMounted = () => <Mounter><Animated/></Mounter>

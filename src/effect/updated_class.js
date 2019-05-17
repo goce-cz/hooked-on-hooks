@@ -32,4 +32,4 @@ class QuestionAndAnswer extends Component {
   }
 }
 
-export const UpdatedClass = () => <Questionnaire><QuestionAndAnswer/></Questionnaire>
+export const ClassUpdated = () => <Questionnaire><QuestionAndAnswer/></Questionnaire>

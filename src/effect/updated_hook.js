@@ -23,4 +23,4 @@ const QuestionAndAnswer = ({ question }) => {
   )
 }
 
-export const UpdatedHook = () => <Questionnaire><QuestionAndAnswer/></Questionnaire>
+export const HookUpdated = () => <Questionnaire><QuestionAndAnswer/></Questionnaire>

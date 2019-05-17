@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-export const SubscriptionHook = () => {
+export const HookSubscription = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   useEffect(
     () => {

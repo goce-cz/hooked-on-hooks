@@ -17,4 +17,4 @@ const Animated = () => {
   )
 }
 
-export const MountedHook = () => <Mounter><Animated/></Mounter>
+export const HookMounted = () => <Mounter><Animated/></Mounter>

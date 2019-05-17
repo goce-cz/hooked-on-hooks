@@ -48,7 +48,7 @@ const useDebounce = (value, setValue, delay) => {
   return [interim, setDebounced, setImmediate]
 }
 
-export const DebouncedInputHookExtracted = () => {
+export const ExtractedHookDebouncedInput = () => {
   const [value, setValue] = useRouteParam('value', '')
   const [
     interimValue,

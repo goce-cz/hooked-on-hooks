@@ -19,7 +19,7 @@ const useRouteParam = (name, defaultValue) => {
   ]
 }
 
-export const RouteInputHookExtracted = () => {
+export const ExtractedHookRouteInput = () => {
   const [value, setValue] = useRouteParam('value', '')
 
   const handleInput = event => setValue(event.target.value)

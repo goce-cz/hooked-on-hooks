@@ -2,7 +2,7 @@ import React from 'react'
 import { TextField } from '@material-ui/core'
 import { useRoute } from 'react-router5'
 
-export const RouteInputHook = () => {
+export const HookRouteInput = () => {
   const { route, router } = useRoute()
 
   const handleInput = event => router.navigate(

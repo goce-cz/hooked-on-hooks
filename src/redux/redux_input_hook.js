@@ -7,7 +7,7 @@ import { useDebounce } from '../hooks'
 import { DEBOUNCE_DELAY } from '../constants'
 import { changeValue, getValue } from '../store'
 
-export const ReduxInputHook = () => {
+export const HookReduxInput = () => {
   const value = useSelector(getValue, [])
   const dispatch = useDispatch()
   const setValue = useCallback(

@@ -6,7 +6,7 @@ import debounce from 'lodash/debounce'
 import { ResetRouteParam } from '../reset_route_param'
 import { DEBOUNCE_DELAY } from '../constants'
 
-export class DebouncedInputClass extends Component {
+export class ClassDebouncedInput extends Component {
   state = {
     interimValue: '',
     lastRouteValue: ''
@@ -83,4 +83,4 @@ export class DebouncedInputClass extends Component {
   }
 }
 
-DebouncedInputClass = withRoute(DebouncedInputClass)
+ClassDebouncedInput = withRoute(ClassDebouncedInput)

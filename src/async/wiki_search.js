@@ -5,9 +5,9 @@ import { useDebounce, useDelayedValue, useLastAvailable, useRouteParam, useTask 
 
 const searchWiki = async query => {
   const escapedQuery = encodeURIComponent(query)
-  const host = query === 'trump'
+  const host = query.toLowerCase() === 'trump'
     ? 'http://go-to-hell.yeah'
-    : 'http://localhost:3000'
+    : window.location.origin
 
   const response = await fetch(`${host}/w/api.php?action=query&list=search&srsearch=${escapedQuery}&format=json`)
   if (response.ok) {
